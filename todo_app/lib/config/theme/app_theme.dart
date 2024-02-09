@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 @immutable
 class AppTheme {
   static final light = FlexThemeData.light(
-    scheme: FlexScheme.mandyRed,
+    scheme: FlexScheme.deepPurple,
     surfaceMode: FlexSurfaceMode.highScaffoldLowSurfacesVariantDialog,
     blendLevel: 40,
     appBarStyle: FlexAppBarStyle.primary,

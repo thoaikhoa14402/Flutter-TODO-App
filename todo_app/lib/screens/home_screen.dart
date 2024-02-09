@@ -19,19 +19,34 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               'My Tasks',
-              style: GoogleFonts.montserrat(
-                textStyle: context.textTheme.headlineSmall!.copyWith(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
+              // style: GoogleFonts.montserrat(
+              //   textStyle: context.textTheme.headlineSmall!.copyWith(
+              //     color: Colors.black,
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              // ),
+              style: context.textTheme.headlineSmall!.copyWith(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
           const SizedBox(height: 12),
-          const TodoTabBarView(),
+          TodoTabBarView(),
         ],
       ),
-      // body:
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        onPressed: () {},
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
+      ),
     );
   }
 }
