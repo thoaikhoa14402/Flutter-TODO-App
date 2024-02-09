@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
+import 'package:todo_app/config/routes/route_location.dart';
 import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/widgets/my_app_bar.dart';
-import 'package:todo_app/widgets/search_bar.dart';
 import 'package:todo_app/widgets/todo_tab_bar.dart';
 
 class HomeScreen extends StatelessWidget {
+  static HomeScreen builder(BuildContext context, GoRouterState state) =>
+      const HomeScreen();
   const HomeScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -19,12 +21,6 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16),
             child: Text(
               'My Tasks',
-              // style: GoogleFonts.montserrat(
-              //   textStyle: context.textTheme.headlineSmall!.copyWith(
-              //     color: Colors.black,
-              //     fontWeight: FontWeight.w600,
-              //   ),
-              // ),
               style: context.textTheme.headlineSmall!.copyWith(
                 color: Colors.black,
                 fontWeight: FontWeight.w600,
@@ -38,7 +34,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
-        onPressed: () {},
+        onPressed: () {
+          context.push(RouteLocation.createTask);
+        },
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32),
         ),

@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/widgets/search_bar.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -13,18 +13,14 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.deepPurple,
       centerTitle: true,
-      title: Text('Todo List App ',
-          // style: TextStyle(
-          //     fontSize: 20,
-          //     color: Colors.white,
-          //     letterSpacing: 0.53,
-          //     fontWeight: FontWeight.w500),
-          style: GoogleFonts.montserrat(
-            fontSize: 20,
-            color: Colors.white,
-            letterSpacing: 0.53,
-            fontWeight: FontWeight.w500,
-          )),
+      title: Text(
+        'Todo List App ',
+        style: context.textTheme.titleLarge!.copyWith(
+          color: Colors.white,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.53,
+        ),
+      ),
       leading: InkWell(
         onTap: () {},
         child: const Icon(
@@ -72,7 +68,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                   'Khoa Nguyen',
                   style: GoogleFonts.montserrat(
                     fontSize: 22,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                 ),
