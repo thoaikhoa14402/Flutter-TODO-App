@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/utils/extensions.dart';
 
 class CommonTextField extends StatelessWidget {
-  const CommonTextField(
-      {super.key,
-      required this.title,
-      required this.hintText,
-      this.prefixIcon,
-      this.maxLines,
-      this.readOnly = false,
-      this.controller});
+  const CommonTextField({
+    super.key,
+    required this.title,
+    required this.hintText,
+    this.prefixIcon,
+    this.maxLines,
+    this.readOnly = false,
+    this.controller,
+  });
 
   final String title;
   final String hintText;
-  final Icon? prefixIcon;
+  final Widget? prefixIcon;
   final int? maxLines;
   final bool readOnly;
   final TextEditingController? controller;
@@ -31,6 +32,7 @@ class CommonTextField extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         TextField(
+          readOnly: readOnly,
           controller: controller,
           onTapOutside: (event) {
             FocusManager.instance.primaryFocus?.unfocus();

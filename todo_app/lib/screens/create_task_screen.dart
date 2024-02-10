@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/widgets/create_new_task/common_text_field.dart';
+import 'package:todo_app/widgets/create_new_task/select_category.dart';
+import 'package:todo_app/widgets/create_new_task/select_date_time.dart';
 
-class CreateTaskScreen extends StatelessWidget {
+class CreateTaskScreen extends ConsumerStatefulWidget {
   static CreateTaskScreen builder(BuildContext context, GoRouterState state) =>
       const CreateTaskScreen();
 
   const CreateTaskScreen({super.key});
 
+  @override
+  ConsumerState<CreateTaskScreen> createState() => _CreateTaskScreenState();
+}
+
+class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,35 +48,20 @@ class CreateTaskScreen extends StatelessWidget {
             const CommonTextField(
               title: 'Task Description',
               hintText: 'Enter your task description',
-              maxLines: 4,
+              maxLines: 8,
             ),
             const SizedBox(height: 24),
-            const Row(
-              children: [
-                Expanded(
-                  child: CommonTextField(
-                    title: 'Date',
-                    hintText: 'Feb 20, 2024',
-                    prefixIcon: Icon(Icons.calendar_today),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: CommonTextField(
-                    title: 'Time',
-                    hintText: '7:30',
-                    prefixIcon: Icon(Icons.access_alarm),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 60),
+            const SelectDateTime(),
+            const SizedBox(height: 28),
+            const SelectCategory(),
+            const SizedBox(height: 80),
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepPurple, // Button background color
                 foregroundColor: Colors.white, // Text color
-                minimumSize: Size.fromHeight(50), // Set the desired height
+                minimumSize:
+                    const Size.fromHeight(50), // Set the desired height
               ),
               child: Text(
                 'Save',

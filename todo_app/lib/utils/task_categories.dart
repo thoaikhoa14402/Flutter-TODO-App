@@ -14,4 +14,14 @@ enum TaskCategories {
   const TaskCategories(this.icon, this.color);
   final IconData icon;
   final Color color;
+
+  static TaskCategories stringToTaskCategory(String name) {
+    try {
+      return TaskCategories.values.firstWhere(
+        (category) => category.name == name,
+      );
+    } catch (e) {
+      return TaskCategories.others;
+    }
+  }
 }

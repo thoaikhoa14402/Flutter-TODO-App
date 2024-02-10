@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/data/models/task.dart';
-import 'package:todo_app/utils/extensions.dart';
+import 'package:todo_app/providers/task/task_provider.dart';
 import 'package:todo_app/utils/task_categories.dart';
 import 'package:todo_app/widgets/list_of_tasks.dart';
 
-class TodoTabBarView extends StatelessWidget {
+class TodoTabBarView extends ConsumerWidget {
   TodoTabBarView({super.key});
 
   static const List<Tab> myTabs = <Tab>[
@@ -105,7 +105,9 @@ class TodoTabBarView extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final taskState = ref.watch(taskProvider);
+
     return DefaultTabController(
       length: 3,
       initialIndex: 0,
@@ -122,6 +124,9 @@ class TodoTabBarView extends StatelessWidget {
                 ListOfTasks(tasks: allTasks),
                 ListOfTasks(tasks: todayTasks),
                 ListOfTasks(tasks: upcomingTasks),
+                // ListOfTasks(tasks: taskState.tasks),
+                // ListOfTasks(tasks: taskState.tasks),
+                // ListOfTasks(tasks: taskState.tasks),
               ],
             ),
           )
