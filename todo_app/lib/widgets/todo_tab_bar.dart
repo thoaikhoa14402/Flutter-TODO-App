@@ -121,12 +121,12 @@ class TodoTabBarView extends ConsumerWidget {
             height: 480,
             child: TabBarView(
               children: [
-                ListOfTasks(tasks: allTasks),
-                ListOfTasks(tasks: todayTasks),
-                ListOfTasks(tasks: upcomingTasks),
-                // ListOfTasks(tasks: taskState.tasks),
-                // ListOfTasks(tasks: taskState.tasks),
-                // ListOfTasks(tasks: taskState.tasks),
+                // ListOfTasks(tasks: allTasks),
+                // ListOfTasks(tasks: todayTasks),
+                // ListOfTasks(tasks: upcomingTasks),
+                ListOfTasks(tasks: taskState.tasks),
+                ListOfTasks(tasks: taskState.tasks),
+                ListOfTasks(tasks: taskState.tasks),
               ],
             ),
           )

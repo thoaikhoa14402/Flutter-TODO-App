@@ -33,7 +33,7 @@ class DataSource {
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE ${AppKeys.dbTable} (
-        ${TaskKeys.id} INTEGER PRIMARY KEY AUTOINCREMENT,
+        ${TaskKeys.id} INTE GER PRIMARY KEY AUTOINCREMENT,
         ${TaskKeys.title} TEXT,
         ${TaskKeys.description} TEXT,
         ${TaskKeys.date} TEXT,

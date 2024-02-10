@@ -5,7 +5,11 @@ import 'package:todo_app/data/repositories/task_repository_declaration.dart';
 import 'package:todo_app/providers/task/task_state.dart';
 
 class TaskNotifier extends StateNotifier<TaskState> {
-  TaskNotifier(this._taskRepository) : super(const TaskState.initial());
+  TaskNotifier(this._taskRepository) : super(const TaskState.initial()) {
+    // load all the task when user opens the application
+    getTasks();
+  }
+
   final TaskRepository _taskRepository;
 
   Future<void> createTask(Task task) async {

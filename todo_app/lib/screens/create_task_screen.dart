@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_app/config/routes/route_location.dart';
+import 'package:todo_app/data/models/task.dart';
+import 'package:todo_app/providers/category_provider.dart';
+import 'package:todo_app/providers/date_provider.dart';
+import 'package:todo_app/providers/task/task_provider.dart';
+import 'package:todo_app/providers/time_provider.dart';
 import 'package:todo_app/utils/extensions.dart';
+import 'package:todo_app/utils/helpers.dart';
+import 'package:todo_app/utils/my_app_alerts.dart';
 import 'package:todo_app/widgets/create_new_task/common_text_field.dart';
 import 'package:todo_app/widgets/create_new_task/select_category.dart';
 import 'package:todo_app/widgets/create_new_task/select_date_time.dart';
@@ -18,6 +26,16 @@ class CreateTaskScreen extends ConsumerStatefulWidget {
 }
 
 class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,16 +57,18 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const CommonTextField(
+            CommonTextField(
               title: 'Task Title',
               hintText: 'Enter your task title',
-              prefixIcon: Icon(Icons.event_note),
+              prefixIcon: const Icon(Icons.event_note),
+              controller: _titleController,
             ),
             const SizedBox(height: 24),
-            const CommonTextField(
+            CommonTextField(
               title: 'Task Description',
               hintText: 'Enter your task description',
               maxLines: 8,
+              controller: _descriptionController,
             ),
             const SizedBox(height: 24),
             const SelectDateTime(),
@@ -56,7 +76,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
             const SelectCategory(),
             const SizedBox(height: 80),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: _createTask,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepPurple, // Button background color
                 foregroundColor: Colors.white, // Text color
@@ -76,5 +96,31 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
         ),
       ),
     );
+  }
+
+  void _createTask() async {
+    final title = _titleController.text.trim();
+    final description = _descriptionController.text.trim();
+    final date = ref.watch(dateProvider);
+    final time = ref.watch(timeProvider);
+    final category = ref.watch(categoryProvider);
+
+    if (title.isNotEmpty) {
+      final task = Task(
+        title: title,
+        description: description,
+        date: DateFormat.yMMMd().format(date),
+        time: Helpers.timeToString(time),
+        category: category,
+        isCompleted: false,
+      );
+      await ref.read(taskProvider.notifier).createTask(task).then((value) {
+        MyAppAlerts.showMySnackBar(
+            context, 'A new task was created successfully!');
+        context.go(RouteLocation.home);
+      });
+    } else {
+      MyAppAlerts.showMySnackBar(context, 'Please fill your task title!');
+    }
   }
 }
