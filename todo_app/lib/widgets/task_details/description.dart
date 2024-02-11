@@ -17,10 +17,13 @@ class TaskDescription extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4),
-        Text(
-          description,
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.w400,
+        Expanded(
+          child: Text(
+            description,
+            style: context.textTheme.bodyLarge!.copyWith(
+              fontWeight: FontWeight.w400,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
