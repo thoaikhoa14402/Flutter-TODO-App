@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/utils/extensions.dart';
 
 class TaskDescription extends StatelessWidget {
   const TaskDescription({super.key, required this.description});
@@ -8,25 +7,29 @@ class TaskDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          'Description: ',
-          style: context.textTheme.bodyLarge!.copyWith(
-            fontWeight: FontWeight.w600,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: RichText(
+          text: TextSpan(
+            style: DefaultTextStyle.of(context).style,
+            children: [
+              const TextSpan(
+                text: 'Description: ',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+              TextSpan(
+                text: description,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(width: 4),
-        Expanded(
-          child: Text(
-            description,
-            style: context.textTheme.bodyLarge!.copyWith(
-              fontWeight: FontWeight.w400,
-            ),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

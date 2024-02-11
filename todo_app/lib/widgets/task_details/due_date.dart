@@ -9,22 +9,21 @@ class DueDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          'Due date: ',
+    return RichText(
+      text: TextSpan(style: DefaultTextStyle.of(context).style, children: [
+        TextSpan(
+          text: 'Due date: ',
           style: context.textTheme.bodyLarge!.copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),
-        const SizedBox(width: 4),
-        Text(
-          '${date} - ${time}',
+        TextSpan(
+          text: '$date - $time',
           style: context.textTheme.bodyLarge!.copyWith(
             fontWeight: FontWeight.w400,
           ),
         ),
-      ],
+      ]),
     );
   }
 }
