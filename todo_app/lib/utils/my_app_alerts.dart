@@ -34,14 +34,18 @@ class MyAppAlerts {
     );
     Widget deleteButton = TextButton(
       onPressed: () async {
-        context.pop(); // case when click on task details
+        if (Navigator.of(context).canPop()) {
+          context.pop();
+        }
         await ref.read(taskProvider.notifier).deleteTask(task).then(
           (value) {
             showMySnackBar(
               context,
               'Task was deleted successfully!',
             );
-            context.pop();
+            if (Navigator.of(context).canPop()) {
+              context.pop();
+            }
           },
         );
       },

@@ -109,7 +109,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
       final task = Task(
         title: title,
         description: description,
-        date: DateFormat.yMMMd().format(date),
+        date: Helpers.dateToString(date),
         time: Helpers.timeToString(time),
         category: category,
         isCompleted: false,
@@ -119,6 +119,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
             context, 'A new task was created successfully!');
         context.go(RouteLocation.home);
       });
+      Helpers.testMethod(task.date, task.time);
     } else {
       MyAppAlerts.showMySnackBar(context, 'Please fill your task title!');
     }

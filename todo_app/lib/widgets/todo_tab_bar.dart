@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/data/models/task.dart';
 import 'package:todo_app/providers/task/task_provider.dart';
+import 'package:todo_app/utils/helpers.dart';
 import 'package:todo_app/utils/task_categories.dart';
+import 'package:todo_app/utils/task_filter.dart';
 import 'package:todo_app/widgets/list_of_tasks.dart';
 
 class TodoTabBarView extends ConsumerWidget {
@@ -107,7 +109,11 @@ class TodoTabBarView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskState = ref.watch(taskProvider);
-
+    final allTasks = taskState.tasks;
+    final todayTasks =
+        Helpers.filterListTasks(taskState.tasks, TaskFilter.today);
+    final upcomingTasks =
+        Helpers.filterListTasks(taskState.tasks, TaskFilter.upcoming);
     return DefaultTabController(
       length: 3,
       initialIndex: 0,
@@ -121,12 +127,9 @@ class TodoTabBarView extends ConsumerWidget {
             height: 480,
             child: TabBarView(
               children: [
-                // ListOfTasks(tasks: allTasks),
-                // ListOfTasks(tasks: todayTasks),
-                // ListOfTasks(tasks: upcomingTasks),
-                ListOfTasks(tasks: taskState.tasks),
-                ListOfTasks(tasks: taskState.tasks),
-                ListOfTasks(tasks: taskState.tasks),
+                ListOfTasks(tasks: allTasks),
+                ListOfTasks(tasks: todayTasks),
+                ListOfTasks(tasks: upcomingTasks),
               ],
             ),
           )
@@ -135,87 +138,3 @@ class TodoTabBarView extends ConsumerWidget {
     );
   }
 }
-
-
-// example
-// import 'package:flutter/material.dart';
-
-// class HomeScreen extends StatefulWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   _HomeScreenState createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen> {
-//   // Dummy list of task items
-//   List<String> allTasks = ['Task 1', 'Task 2', 'Task 3', 'Task 4', 'Task 5'];
-//   List<String> todayTasks = ['Task 2', 'Task 4'];
-//   List<String> upcomingTasks = ['Task 3', 'Task 5'];
-
-//   late TabController _tabController;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _tabController = TabController(length: 3, vsync: this);
-//   }
-
-//   @override
-//   void dispose() {
-//     _tabController.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('My Todo List'),
-//         bottom: TabBar(
-//           controller: _tabController,
-//           tabs: [
-//             Tab(text: 'All'),
-//             Tab(text: 'Today'),
-//             Tab(text: 'Upcoming'),
-//           ],
-//         ),
-//       ),
-//       body: TabBarView(
-//         controller: _tabController,
-//         children: [
-//           // Content for "All" tab
-//           ListView.builder(
-//             itemCount: allTasks.length,
-//             itemBuilder: (context, index) {
-//               return ListTile(
-//                 title: Text(allTasks[index]),
-//               );
-//             },
-//           ),
-
-//           // Content for "Today" tab
-//           ListView.builder(
-//             itemCount: todayTasks.length,
-//             itemBuilder: (context, index) {
-//               return ListTile(
-//                 title: Text(todayTasks[index]),
-//               );
-//             },
-//           ),
-
-//           // Content for "Upcoming" tab
-//           ListView.builder(
-//             itemCount: upcomingTasks.length,
-//             itemBuilder: (context, index) {
-//               return ListTile(
-//                 title: Text(upcomingTasks[index]),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
