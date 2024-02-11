@@ -29,11 +29,12 @@ class MyAppAlerts {
     required Task task,
   }) async {
     Widget cancelButton = TextButton(
-      child: const Text('NO'),
+      child: const Text('Cancel'),
       onPressed: () => context.pop(),
     );
     Widget deleteButton = TextButton(
       onPressed: () async {
+        context.pop(); // case when click on task details
         await ref.read(taskProvider.notifier).deleteTask(task).then(
           (value) {
             showMySnackBar(
@@ -44,21 +45,23 @@ class MyAppAlerts {
           },
         );
       },
-      child: const Text('YES'),
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: const Text('Are you sure you want to delete this task?'),
-      actions: [
-        deleteButton,
-        cancelButton,
-      ],
+      child: const Text('Confirm'),
     );
 
     await showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text(
+            'Are you sure you want to mark this task as completed?',
+          ),
+          actions: [
+            deleteButton,
+            cancelButton,
+          ],
+        );
+        ;
       },
     );
   }

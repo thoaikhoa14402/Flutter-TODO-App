@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/data/models/task.dart';
 import 'package:todo_app/utils/extensions.dart';
+import 'package:todo_app/utils/my_app_alerts.dart';
 import 'package:todo_app/widgets/task_details/description.dart';
 import 'package:todo_app/widgets/task_details/due_date.dart';
 
-class TaskDetails extends StatelessWidget {
+class TaskDetails extends ConsumerWidget {
   const TaskDetails({super.key, required this.task});
   final Task task;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: double.infinity,
       height: 450,
@@ -64,7 +66,10 @@ class TaskDetails extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  MyAppAlerts.showAlertDelete(
+                      context: context, ref: ref, task: task);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple, // Button background color
                   foregroundColor: Colors.white, // Text color
