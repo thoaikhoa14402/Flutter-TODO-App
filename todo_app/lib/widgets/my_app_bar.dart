@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/services/notification_service.dart';
 import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/widgets/search_bar.dart';
 
@@ -43,6 +44,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ),
+        // ElevatedButton(
+        //   child: const Text('Show notifications'),
+        //   onPressed: () {
+        //     // NotificationService.scheduledNotification(
+        //     //     title: 'Sample title', body: 'It works!');
+        //   },
+        // ),
       ],
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(110.0),

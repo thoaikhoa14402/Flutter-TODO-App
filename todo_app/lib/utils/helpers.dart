@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart';
 import 'package:todo_app/data/models/task.dart';
+import 'package:todo_app/main.dart';
+import 'package:todo_app/services/notification_service.dart';
 import 'package:todo_app/utils/task_filter.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 
 class Helpers {
   Helpers._();
@@ -70,5 +76,14 @@ class Helpers {
     });
 
     return filteredTasks;
+  }
+
+  static void scheduledNotification(Task task) {
+    final scheduledDate = _parseTaskDateTime(task.date, task.time).subtract(
+      const Duration(minutes: 10),
+    );
+
+    NotificationService.scheduledNotification(
+        task: task, scheduledDate: scheduledDate);
   }
 }
