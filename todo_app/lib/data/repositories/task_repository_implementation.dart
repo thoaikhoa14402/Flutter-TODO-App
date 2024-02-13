@@ -7,9 +7,11 @@ class TaskRepositoryImplementation implements TaskRepository {
   TaskRepositoryImplementation(this._dataSource);
 
   @override
-  Future<void> addTask(Task task) async {
+  Future<Task> addTask(Task task) async {
     try {
-      await _dataSource.addTask(task);
+      int taskId = await _dataSource.addTask(task);
+      Task createdTask = task.copyWith(id: taskId);
+      return createdTask;
     } catch (e) {
       throw '$e';
     }

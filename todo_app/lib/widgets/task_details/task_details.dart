@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_app/data/models/task.dart';
+import 'package:todo_app/providers/task/task_provider.dart';
 import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/utils/my_app_alerts.dart';
 import 'package:todo_app/widgets/task_details/description.dart';
@@ -90,3 +92,20 @@ class TaskDetails extends ConsumerWidget {
     // return const Text('By default');
   }
 }
+
+
+ // static TaskDetails builder(
+  //     BuildContext context, WidgetRef ref, GoRouterState state) {
+  //   final allTasks = ref.watch(taskProvider).tasks;
+  //   final id = state.pathParameters['id'];
+  //   final task = allTasks.firstWhere((t) => t.id == id);
+  //   return showModalBottomSheet(
+  //     context: context,
+  //     builder: (context) => TaskDetails(task: task),
+  //   );
+  //   return TaskDetails(task: task);
+  // }
+
+  // static TaskDetails builder(BuildContext context, GoRouterState state) {
+  //   //
+  // }

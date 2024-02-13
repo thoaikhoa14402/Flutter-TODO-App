@@ -1,11 +1,26 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:todo_app/config/routes/app_routes.dart';
 import 'package:todo_app/data/models/task.dart';
+import 'package:todo_app/providers/task_detail_notifier_provider.dart';
 
 class NotificationService {
   static FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+
+  // on tap on any notification
+  static void onNotificationTap(
+      NotificationResponse notificationResponse) async {
+    // handle based on payload (eg task id)
+    final context = navigationKey.currentContext;
+    ProviderScope.containerOf(context!)
+        .read(modalBottomSheetOpenProvider.notifier)
+        .state = true;
+    context.go('/home/${notificationResponse.payload}');
+  }
 
   Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
@@ -21,9 +36,10 @@ class NotificationService {
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
-    await notificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse:
-            (NotificationResponse notificationResponse) async {});
+    await notificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: onNotificationTap,
+    );
   }
 
   notificationDetails() {
@@ -43,11 +59,11 @@ class NotificationService {
   }) async {
     tz.initializeTimeZones();
     await notificationsPlugin.zonedSchedule(
-      id,
+      task.id!,
       task.title,
       body,
       tz.TZDateTime.from(scheduledDate, tz.local),
-      // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 2)),
+      // tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       const NotificationDetails(
           android: AndroidNotificationDetails(
         'channel id',
@@ -60,7 +76,7 @@ class NotificationService {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       androidAllowWhileIdle: true,
-      payload: body,
+      payload: task.id.toString(),
     );
   }
 }

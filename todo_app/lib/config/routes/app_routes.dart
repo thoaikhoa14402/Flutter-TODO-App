@@ -19,16 +19,4 @@ final appRoutes = [
     parentNavigatorKey: navigationKey,
     builder: CreateTaskScreen.builder,
   ),
-  // GoRoute(
-  //   path: RouteLocation.taskDetails,
-  //   parentNavigatorKey: navigationKey,
-  //   builder: (context, state) {
-  //    final id = state.params['id'];
-  //       final todo = todos.firstWhere((t) => t.id == id);
-  //       return showModalBottomSheet(
-  //         context: context,
-  //         builder: (context) => TaskDetails(todo: todo),
-  //       );
-  //   },
-  // ),
 ];

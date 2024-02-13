@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:todo_app/config/routes/route_location.dart';
 import 'package:todo_app/data/models/task.dart';
-import 'package:todo_app/main.dart';
 import 'package:todo_app/providers/category_provider.dart';
 import 'package:todo_app/providers/date_provider.dart';
 import 'package:todo_app/providers/task/task_provider.dart';
@@ -116,12 +114,11 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
         isCompleted: false,
       );
       await ref.read(taskProvider.notifier).createTask(task).then((value) {
-        Helpers.scheduledNotification(task);
+        Helpers.scheduledNotification(value);
         MyAppAlerts.showMySnackBar(
             context, 'A new task was created successfully!');
         context.go(RouteLocation.home);
       });
-      Helpers.testMethod(task.date, task.time);
     } else {
       MyAppAlerts.showMySnackBar(context, 'Please fill your task title!');
     }

@@ -12,12 +12,14 @@ class TaskNotifier extends StateNotifier<TaskState> {
 
   final TaskRepository _taskRepository;
 
-  Future<void> createTask(Task task) async {
+  Future<Task> createTask(Task task) async {
     try {
-      await _taskRepository.addTask(task);
+      final Task createdTask = await _taskRepository.addTask(task);
       getTasks();
+      return createdTask;
     } catch (e) {
       debugPrint(e.toString());
+      rethrow;
     }
   }
 

@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart';
 import 'package:todo_app/data/models/task.dart';
-import 'package:todo_app/main.dart';
 import 'package:todo_app/services/notification_service.dart';
 import 'package:todo_app/utils/task_filter.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 
 class Helpers {
   Helpers._();
@@ -29,10 +24,6 @@ class Helpers {
     } catch (e) {
       return '7:30PM';
     }
-  }
-
-  static testMethod(String taskDate, String taskTime) {
-    print('Parsed date_time: ${_parseTaskDateTime(taskDate, taskTime)}');
   }
 
   static DateTime _parseTaskDateTime(String taskDate, String taskTime) {
