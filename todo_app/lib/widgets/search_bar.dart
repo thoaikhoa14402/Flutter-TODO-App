@@ -1,17 +1,12 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_app/data/models/task.dart';
+import 'package:todo_app/providers/task/task_provider.dart';
+import 'package:todo_app/widgets/task_details/task_details.dart';
+import 'package:todo_app/widgets/task_item.dart';
 
 class MyCustomSearch extends SearchDelegate {
-  final List<String> allData = [
-    'American',
-    'Russia',
-    'China',
-    'Germany',
-    'Italy',
-    'France',
-    'England',
-    'Vietnamese'
-  ];
-
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -36,26 +31,62 @@ class MyCustomSearch extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
-      child: Text('Search results for: $query'),
-    );
+    final allTasks =
+        ProviderScope.containerOf(context).read(taskProvider).tasks;
+    final foundTask = allTasks.firstWhereOrNull((task) => task.title == query);
+    return foundTask != null
+        ? Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: InkWell(
+                onTap: () async {
+                  // Show task details
+                  await showModalBottomSheet(
+                    context: context,
+                    builder: (ctx) {
+                      return TaskDetails(task: foundTask);
+                    },
+                  );
+                },
+                child: TaskItem(task: foundTask)),
+          )
+        : const Center(
+            child: Text('No results found.'),
+          );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
-    for (var item in allData) {
-      if (item.toLowerCase().contains(query.toLowerCase())) {
+    final allTasks =
+        ProviderScope.containerOf(context).read(taskProvider).tasks;
+
+    List<Task> matchQuery = [];
+    for (var item in allTasks) {
+      if (item.title.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(item);
       }
     }
-    return ListView.builder(
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: ListView.builder(
+        shrinkWrap: true,
         itemCount: matchQuery.length,
         itemBuilder: (context, index) {
-          var result = matchQuery[index];
-          return ListTile(
-            title: Text(result),
+          final task = matchQuery[index];
+          return InkWell(
+            onTap: () async {
+              // Show task details
+              await showModalBottomSheet(
+                context: context,
+                builder: (ctx) {
+                  return TaskDetails(task: task);
+                },
+              );
+            },
+            child: TaskItem(task: task),
           );
-        });
+        },
+      ),
+    );
   }
 }
