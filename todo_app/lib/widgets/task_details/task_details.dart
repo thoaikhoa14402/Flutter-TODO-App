@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_app/data/models/task.dart';
-import 'package:todo_app/providers/task/task_provider.dart';
 import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/utils/my_app_alerts.dart';
 import 'package:todo_app/widgets/task_details/description.dart';

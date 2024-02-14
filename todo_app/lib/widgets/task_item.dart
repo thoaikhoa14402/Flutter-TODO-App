@@ -22,7 +22,7 @@ class TaskItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: context.colorScheme.surface,
           border: Border.all(
-            width: 1,
+            width: 0.5,
             color: Colors.grey, // Set the border color to grey
           ),
           borderRadius: BorderRadius.circular(12),
@@ -57,7 +57,8 @@ class TaskItem extends StatelessWidget {
                 children: [
                   Text(
                     task.title,
-                    style: context.textTheme.titleLarge!.copyWith(
+                    style: context.textTheme.titleMedium!.copyWith(
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -68,8 +69,9 @@ class TaskItem extends StatelessWidget {
                       Text(
                         '${task.date} - ${task.time}',
                         style: context.textTheme.bodyMedium!.copyWith(
-                          color: Colors.deepPurple,
-                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 83, 83, 83),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
                     ],
