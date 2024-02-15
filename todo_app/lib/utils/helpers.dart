@@ -39,6 +39,15 @@ class Helpers {
     );
   }
 
+  static bool isTaskDueDateToday(String taskDate) {
+    final DateTime parsedDate = DateFormat.yMMMd().parse(taskDate);
+    final DateTime now = DateTime.now();
+
+    return parsedDate.year == now.year &&
+        parsedDate.month == now.month &&
+        parsedDate.day == now.day;
+  }
+
   static List<Task> filterListTasks(List<Task> tasks, TaskFilter filter) {
     final DateTime now = DateTime.now();
     final DateTime today = DateTime(now.year, now.month, now.day);

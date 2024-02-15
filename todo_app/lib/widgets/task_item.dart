@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/data/models/task.dart';
 import 'package:todo_app/utils/extensions.dart';
+import 'package:todo_app/utils/helpers.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key, required this.task, this.onCompleted});
+  const TaskItem(
+      {super.key,
+      required this.task,
+      this.onCompleted,
+      this.isSearchView = false});
   final Task task;
 
   final void Function(bool?)? onCompleted;
+  final bool isSearchView;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +26,7 @@ class TaskItem extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(9.0),
         decoration: BoxDecoration(
-          color: context.colorScheme.surface,
+          color: isSearchView ? Colors.white : context.colorScheme.surface,
           border: Border.all(
             width: 0.5,
             color: Colors.grey, // Set the border color to grey
@@ -69,9 +75,13 @@ class TaskItem extends StatelessWidget {
                       Text(
                         '${task.date} - ${task.time}',
                         style: context.textTheme.bodyMedium!.copyWith(
-                          color: Color.fromARGB(255, 83, 83, 83),
+                          color: Helpers.isTaskDueDateToday(task.date)
+                              ? Colors.red
+                              : const Color.fromARGB(255, 61, 61, 61),
                           fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                          fontWeight: Helpers.isTaskDueDateToday(task.date)
+                              ? FontWeight.w600
+                              : FontWeight.w500,
                         ),
                       ),
                     ],

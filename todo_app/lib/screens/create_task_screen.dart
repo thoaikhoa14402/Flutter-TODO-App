@@ -59,7 +59,7 @@ class _CreateTaskScreenState extends ConsumerState<CreateTaskScreen> {
             CommonTextField(
               title: 'Task Title',
               hintText: 'Enter your task title',
-              prefixIcon: const Icon(Icons.event_note),
+              prefixIcon: const Icon(Icons.title),
               controller: _titleController,
             ),
             const SizedBox(height: 24),

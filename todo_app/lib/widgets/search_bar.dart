@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_app/data/models/task.dart';
 import 'package:todo_app/providers/task/task_provider.dart';
+import 'package:todo_app/utils/extensions.dart';
 import 'package:todo_app/widgets/task_details/task_details.dart';
 import 'package:todo_app/widgets/task_item.dart';
 
@@ -66,26 +67,43 @@ class MyCustomSearch extends SearchDelegate {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 12),
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: matchQuery.length,
-        itemBuilder: (context, index) {
-          final task = matchQuery[index];
-          return InkWell(
-            onTap: () async {
-              // Show task details
-              await showModalBottomSheet(
-                context: context,
-                builder: (ctx) {
-                  return TaskDetails(task: task);
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12),
+        child: Column(children: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            width: double.infinity,
+            child: Text('Suggested search',
+                style: context.textTheme.titleLarge!.copyWith(
+                  fontSize: 18,
+                  color: Color.fromARGB(255, 114, 111, 111),
+                )),
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: matchQuery.length,
+            itemBuilder: (context, index) {
+              final task = matchQuery[index];
+              return InkWell(
+                onTap: () async {
+                  // Show task details
+                  await showModalBottomSheet(
+                    context: context,
+                    builder: (ctx) {
+                      return TaskDetails(task: task);
+                    },
+                  );
                 },
+                child: TaskItem(
+                  task: task,
+                  isSearchView: true,
+                ),
               );
             },
-            child: TaskItem(task: task),
-          );
-        },
+          ),
+        ]),
       ),
     );
   }
